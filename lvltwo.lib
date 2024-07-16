@@ -1,0 +1,369 @@
+; ------------------------------------------ Green Enemy for Pattrn 1 ---------------------------
+draw_enemy_1_g macro x , y 
+    push si
+    mov ax, 0
+    mov bx, 0
+    mov cx, 0
+    mov dx, 0
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 16
+    mov temp_y , al
+
+    mov si, offset enemy
+    e_row_1:                                                        ; 32x32 
+        e_column_1:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne e_column_1
+        add func_y, 1
+        mov al, x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  e_row_1
+
+        pop si
+
+endm
+
+; ------------------------------------------ Red Enemy for Pattrn 1 ---------------------------
+draw_enemy_1_r macro x , y 
+    push si
+    mov ax, 0
+    mov bx, 0
+    mov cx, 0
+    mov dx, 0
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 16
+    mov temp_y , al
+
+    mov si, offset enemy1
+    e_row_1_r:                                                        ; 32x32 
+        e_column_1_r:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne e_column_1_r
+        add func_y, 1
+        mov al, x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  e_row_1_r
+
+        pop si
+
+endm
+
+; ----------------------------------------------------------- Green Enemy for pattrn 2
+draw_enemy_new macro x , y 
+    push si
+    mov ax, 0
+    mov bx, 0
+    mov cx, 0
+    mov dx, 0
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 16
+    mov temp_y , al
+
+    mov si, offset enemy
+    e_row_2:                                                        ; 32x32 
+        e_column_2:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne e_column_2
+        add func_y, 1
+        mov al, x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  e_row_2
+
+        pop si
+
+endm
+
+; ---------------------------------------------------------- Red Enemy for pattrn 2 
+draw_enemy_new_1 macro x , y 
+    push si
+    mov ax, 0
+    mov bx, 0
+    mov cx, 0
+    mov dx, 0
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 16
+    mov temp_y , al
+
+    mov si, offset enemy1
+    new_e_row_2:                                                        ; 32x32 
+        new_e_column_2:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne new_e_column_2
+        add func_y, 1
+        mov al, x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  new_e_row_2
+
+        pop si
+
+endm
+
+; ---------------------------------------------------------- Printing pattrn ----------------------------------------
+
+print_pattrn_2 macro  
+    ; Clearing Register
+        mov AX, 0
+        mov BX, 0
+        mov CX, 0 
+        mov DX, 0  
+        mov si, 0
+        mov temp , 0
+
+        cmp rndm_num, 3
+        ja patrn_2
+
+        patrn_1: 
+
+            mov ax,num                      ; check for odd input
+            mov bl,2   
+            div bl                          ; quotient in al
+                                                
+            cmp ah,0
+            .if ah == 0
+                mov turn , 0
+            .endif
+            .if ah == 1
+                mov turn, 1
+            .endif
+            add num , 1
+
+            mov al, xlen
+            mov len_x, al
+
+
+        ; -------------- Left Side ----------------
+            
+            mov si, offset x_cor_copy 
+            mov temp , si
+            mov si, offset y_cor_copy
+        
+            shape_1: 
+                    mov dl, [si]
+                    mov store_y, dl
+                    inc si  
+                    xchg si, temp
+                    mov dh, [si]
+                    .if store_y != 0
+                        .if border == 0
+                            sub dh, 1
+                        .endif
+
+                        .if border == 1
+                            add dh, 1
+                        .endif
+
+                        .if dh == 3
+                            mov border, 1
+                        .endif
+
+                        .if dh == 210
+                            mov border, 0
+                        .endif
+                    .endif
+                    mov store_x, dh
+                    mov [si] , dh
+                    inc si
+                    xchg si, temp
+                    MOV AH,02H
+                    INT 10H 
+                    ;draw
+                    .if turn == 0
+                        .if store_x != 0
+                            draw_enemy_1_g store_x, store_y
+                        .endif
+                    .endif
+                    
+                    .if turn == 1
+                        .if store_x != 0
+                            draw_enemy_1_r store_x, store_y
+                        .endif
+                    .endif
+
+                    
+                    ;draw_enemy_1 store_x, store_y
+                            
+                    sub len_x ,1
+                    cmp len_x ,0
+                    jne shape_1
+
+            mov AX, 0
+            mov BX, 0
+            mov CX, 0 
+            mov DX, 0  
+            mov si, 0
+            mov temp , 0
+
+            jmp Exit___
+
+            patrn_2:  
+
+                mov ax,num                      ; check for odd input
+                mov bl,2   
+                div bl                          ; quotient in al
+                                                    
+                cmp ah,0
+                .if ah == 0
+                    mov turn , 0
+                .endif
+                .if ah == 1
+                    mov turn, 1
+                .endif
+                add num , 1
+
+                mov al, xlen_2
+                mov len_x, al
+
+
+            ; -------------- Left Side ----------------
+                
+                mov si, offset x_cor_2 
+                mov temp , si
+                mov si, offset y_cor_2
+            
+                shape_2: 
+                        mov dl, [si]
+                        mov store_y, dl
+                        inc si  
+                        xchg si, temp
+                        mov dh, [si]
+                        .if store_y != 0
+                            .if border == 0
+                                sub dh, 1
+                            .endif
+
+                            .if border == 1
+                                add dh, 1
+                            .endif
+
+                            .if dh == 3
+                                mov border, 1
+                            .endif
+
+                            .if dh == 210
+                                mov border, 0
+                            .endif
+                        .endif
+
+                        mov store_x, dh
+                        mov [si] , dh
+                        inc si
+                        xchg si, temp
+                        MOV AH,02H
+                        INT 10H 
+                        ;draw
+                        .if turn == 0
+                            .if store_x != 0
+                                draw_enemy_new store_x, store_y
+                            .endif
+                        .endif
+                        
+                        .if turn == 1
+                            .if store_x != 0
+                                draw_enemy_new_1 store_x, store_y
+                            .endif
+                        .endif
+
+                        ;draw_enemy_new store_x, store_y
+                                
+                        sub len_x ,1
+                        cmp len_x ,0
+                        jne shape_2
+
+                mov AX, 0
+                mov BX, 0
+                mov CX, 0 
+                mov DX, 0  
+                mov si, 0
+                mov temp , 0
+
+    Exit___:
+            
+endm

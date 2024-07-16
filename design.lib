@@ -1,0 +1,170 @@
+congratulation_1 macro
+
+    design:
+        set_background
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 10 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset congo                                ; congratulation
+        mov ah, 09h
+        int 21h
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 12 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset completed_1                          ; Level 1 completed 
+        mov ah, 09h
+        int 21h
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 14 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset press                                ; Press key to continue
+        mov ah, 09h
+        int 21h
+
+        ;call sleeping
+
+        mov ah, 0                                           ; Take Keyboard Input
+        int 16h
+        
+        cmp ah,1Ch
+        je exit_scr
+
+        jmp design
+
+    exit_scr: 
+
+endm
+
+congratulation_2 macro
+
+    design_2:
+        set_background
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 10 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset congo                                ; congratulation
+        mov ah, 09h
+        int 21h
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 12 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset completed_2                          ; Level 1 completed 
+        mov ah, 09h
+        int 21h
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 14 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset press                                ; Press key to continue
+        mov ah, 09h
+        int 21h
+
+        ;call sleeping
+
+        mov ah, 0                                           ; Take Keyboard Input
+        int 16h
+        
+        cmp ah,1Ch
+        je exit_scr_2
+
+        jmp design_2
+
+    exit_scr_2: 
+
+endm
+
+congratulation_3 macro
+
+    design_3:
+        set_background
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 10 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset congo                                ; congratulation
+        mov ah, 09h
+        int 21h
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 12 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset completed_3                          ; Level 1 completed 
+        mov ah, 09h
+        int 21h
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 14 ;Row Number
+        MOV DL, 5 ;Column Number
+        INT 10H
+
+        mov dx, offset press                                ; Press key to continue
+        mov ah, 09h
+        int 21h
+
+        ;call sleeping
+
+        mov ah, 0                                           ; Take Keyboard Input
+        int 16h
+        
+        cmp ah,1Ch
+        je exit_scr_3
+
+        jmp design_3
+
+    exit_scr_3: 
+
+endm
+
+header macro 
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 0 ;Row Number
+        MOV DL, 0 ;Column Number
+        INT 10H
+
+        mov dx, offset score_description
+        mov ah, 09h
+        int 21h
+
+        call printscore
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 0 ;Row Number
+        MOV DL, 15 ;Column Number
+        INT 10H
+
+        mov dx, offset str1
+        mov ah, 09h
+        int 21h
+
+        MOV AH,02H                                          ; Set Cursor position
+        MOV DH, 0 ;Row Number
+        MOV DL, 32 ;Column Number
+        INT 10H
+
+        mov dx, offset level_description
+        mov ah, 09h
+        int 21h
+
+        mov dl, level
+        add dl, 48
+        mov ah, 02H
+        int 21h
+endm 

@@ -1,0 +1,151 @@
+printBox macro check
+
+; --------------------- Print Box ----------------------------------
+    cmp check, 0
+    .if check == 0
+        jmp top 
+    .endif
+    .if check == 1
+        jmp middle 
+    .endif
+
+    .if check == 2
+        jmp down1
+    .endif
+
+    top:
+        ; Cursor position  
+   
+        MOV AH,02H
+        MOV DH, 11 ;Row Number                                      ; For 12H -> repace 10 with 26 and 9 with 25 in column 
+        MOV DL, 10 ;Column Number
+        INT 10H
+        
+        mov al, '-'
+        mov ah, 09h
+        mov cx, 22
+        mov bl, 11010100b
+        int 10h
+
+        mov count , 9
+        column: 
+            MOV AH,02H
+            MOV DH, 12 ;Row Number
+            MOV DL, count ;Column Number
+            INT 10H
+
+            mov al, 'l'
+            mov ah, 09h
+            mov cx, 1
+            mov bl, 11010100b
+            int 10h      
+            
+            cmp count, 32                                                   ; For 12H -> replace 32 with 48 
+            mov count, 32
+            jne column 
+
+        MOV AH,02H
+        MOV DH, 13 ;Row Number
+        MOV DL, 10 ;Column Number
+        INT 10H
+
+        mov ah,09
+        mov al,'-'
+        mov bl,11010100b
+        mov bh,0
+        mov cx,22
+        int 10h
+
+        jmp Exit_
+
+    middle:
+        MOV AH,02H
+        MOV DH, 13 ;Row Number
+        MOV DL, 10 ;Column Number
+        INT 10H
+
+        mov ah,09
+        mov al,'-'
+        mov bl,11010100b
+        mov bh,0
+        mov cx,22
+        int 10h
+
+        mov count , 9
+        column1: 
+            MOV AH,02H
+            MOV DH, 14 ;Row Number
+            MOV DL, count ;Column Number
+            INT 10H
+
+            mov al, 'l'
+            mov ah, 09h
+            mov cx, 1
+            mov bl, 11010100b
+            int 10h      
+            
+            cmp count, 32
+            mov count, 32
+            jne column1 
+
+        MOV AH,02H
+        MOV DH, 15 ;Row Number
+        MOV DL, 10 ;Column Number
+        INT 10H
+
+        mov ah,09
+        mov al,'-'
+        mov bl,11010100b
+        mov bh,0
+        mov cx,22
+        int 10h
+
+        jmp Exit_
+
+    down1:
+        MOV AH,02H
+        MOV DH, 15 ;Row Number
+        MOV DL, 10 ;Column Number
+        INT 10H
+
+        mov ah,09
+        mov al,'-'
+        mov bl,11010100b
+        mov bh,0
+        mov cx,22
+        int 10h
+
+        mov count , 9
+        column2: 
+            MOV AH,02H
+            MOV DH, 16 ;Row Number
+            MOV DL, count ;Column Number
+            INT 10H
+
+            mov al, 'l'
+            mov ah, 09h
+            mov cx, 1
+            mov bl, 11010100b
+            int 10h      
+            
+            cmp count, 32
+            mov count, 32
+            jne column2 
+
+        MOV AH,02H
+        MOV DH, 17 ;Row Number
+        MOV DL, 10 ;Column Number
+        INT 10H
+
+        mov ah,09
+        mov al,'-'
+        mov bl,11010100b
+        mov bh,0
+        mov cx,22
+        int 10h
+
+
+    Exit_:
+    mov al, 0
+
+Endm

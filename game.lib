@@ -1,0 +1,659 @@
+draw_monster macro x , y 
+    push si
+    mov ax, 0
+    mov bx, 0
+    mov cx, 0
+    mov dx, 0
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 32
+    mov temp_y , al
+
+    mov si, offset monster
+    m_row1:                                                        ; 32x32 
+        m_column1:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne m_column1
+        add func_y, 1
+        mov al, x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  m_row1
+
+        pop si
+
+endm
+
+draw_monster_bullet macro x , y 
+    mov si, offset m_bulet
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov cx, 2
+
+    ddd:
+        mov temp, cx
+        mov cx, 4
+        bbb:
+            mov temp1, cx
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H  
+            inc si
+            add func_X, 1
+            mov cx, temp1
+        loop bbb
+        add func_y, 1
+        mov al, x
+        mov func_X, al 
+        mov cx, temp
+    loop ddd
+
+endm
+
+bullet macro b_x, b_y
+
+    MOV AH,02H 
+    MOV DH, b_x ;Row Number
+    MOV DL, b_y ;Column Number
+    INT 10H
+
+    mov al, '!'
+    mov ah, 09h
+    mov cx, 1
+    mov bl, 02
+    int 10h
+    
+
+Endm
+
+set_background macro
+
+    ;Background
+        
+    MOV AH, 06h    ; Scroll up function
+    XOR AL, AL     ; Clear entire screen
+    XOR CX, CX     ; Upper left corner CH=row, CL=column
+    MOV DX, 1D4FH  ; lower right corner DH=row, DL=column 
+    MOV BH, 0h    ; Black
+    INT 10H
+
+   mov ax, 0
+   mov bx, 0
+   mov cx, 0
+   mov dx, 0
+
+
+
+endm
+
+draw_image macro x , y 
+    mov si, offset image
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 32
+    mov temp_y , al
+
+    s_row:                                                        ; 32x32 
+        s_column:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne s_column
+        add func_y, 1
+        mov al, s_x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  s_row
+
+endm
+
+
+draw_image_2 macro x , y 
+    mov si, offset image
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 32
+    mov temp_y , al
+
+    s_row_2:                                                        ; 32x32 
+        s_column_2:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne s_column_2
+        add func_y, 1
+        mov al, s_x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  s_row_2
+
+endm
+
+draw_image_3 macro x , y 
+    mov si, offset image
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 32
+    mov temp_y , al
+
+    s_row_3:                                                        ; 32x32 
+        s_column_3:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne s_column_3
+        add func_y, 1
+        mov al, s_x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  s_row_3
+
+endm
+
+
+draw_bullet macro x , y 
+    mov si, offset bulet
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 8
+    mov temp_x , al
+
+    mov al, y
+    add al, 8
+    mov temp_y , al
+
+    b_row:                                                        ; 32x32 
+        b_column:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne b_column
+        add func_y, 1
+        mov al, bx_
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  b_row
+
+endm
+
+draw_bullet_2 macro x , y 
+    mov si, offset bulet
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 8
+    mov temp_x , al
+
+    mov al, y
+    add al, 8
+    mov temp_y , al
+
+    b_row_2:                                                        ; 32x32 
+        b_column_2:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne b_column_2
+        add func_y, 1
+        mov al, bx_
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  b_row_2
+
+endm
+
+draw_bullet_3 macro x , y 
+    mov si, offset bulet
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 8
+    mov temp_x , al
+
+    mov al, y
+    add al, 8
+    mov temp_y , al
+
+    b_row_3:                                                        ; 32x32 
+        b_column_3:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne b_column_3
+        add func_y, 1
+        mov al, bx_
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  b_row_3
+
+endm
+
+
+sleep macro
+    sleeping:
+    MOV     AH, 00H
+    INT     1AH
+    CMP     DX,WAIT_TIME
+    JB      sleeping
+    ADD     DX, 5        ;1-18, where smaller is faster and 18 is close to 1 second
+    MOV     WAIT_TIME,DX
+
+endm
+
+sleep_2 macro
+    sleeping_2:
+    MOV     AH, 00H
+    INT     1AH
+    CMP     DX,WAIT_TIME
+    JB      sleeping_2
+    ADD     DX, 5        ;1-18, where smaller is faster and 18 is close to 1 second
+    MOV     WAIT_TIME,DX
+
+endm
+
+sleep_3 macro
+    sleeping_3:
+    MOV     AH, 00H
+    INT     1AH
+    CMP     DX,WAIT_TIME
+    JB      sleeping_3
+    ADD     DX, 5        ;1-18, where smaller is faster and 18 is close to 1 second
+    MOV     WAIT_TIME,DX
+
+endm
+
+rendom macro 
+   MOV AH, 00h  ; interrupts to get system time        
+   INT 1AH      ; CX:DX now hold number of clock ticks since midnight      
+
+   mov  ax, dx
+   xor  dx, dx
+   mov  cx, 10    
+   div  cx       ; here dx contains the remainder of the division - from 0 to 9
+
+    mov rndm_num , dx
+endm
+
+
+
+
+run_game macro lvl
+
+    rendom
+    mov  rndm_num , 5
+
+    .if lvl == 1
+        jmp level_one
+    .endif
+
+    .if lvl == 2
+        jmp level_two
+    .endif
+
+    .if lvl == 3
+        jmp level_three
+    .endif
+    jmp Exit__
+
+    level_one:
+
+        sub by_ , 4
+        sub by1_ , 2
+        cmp by_ , 20
+        jb reset
+
+        set_background                                      ; Clearing Screen
+        header
+
+
+        print_pattrn                                        ; Printing Level one pattern
+        ;spaceship s_x , s_y                                 ; Spaceship
+
+        draw_image s_x, s_y
+        draw_bullet bx_, by_
+        sleep
+        ;bullet bx_ , by_                                    ; Left Bullet
+        burst_check bx_ , by_
+        ;bullet bx1_ , by1_                                  ; Right Bullet
+        ;draw_bullet bx1_, by1_
+        ;burst_check1 bx1_ , by1_
+
+        
+        .if one_score == xlen ; if score == xlen
+            mov lvl, 2
+            congratulation_1 
+            mov game_status, 1
+            ;mov ax, xlen
+           ; mov score, ax 
+        .endif 
+        .if lvl == 2
+            ;jmp level_two
+            jmp Exit__
+        .endif
+
+        
+        mov ah, 1                                           ; Take Keyboard Input
+        int 16h
+        jz level_one                                        ; IF no key press then again jump to level one else check which key is pressed
+        jmp keyPress
+
+        keyPress:
+            mov ah, 0
+            int 16h
+            cmp al, 1Bh                                     ; Esc key (Exit)
+            je Exit__
+            cmp ah,4Bh                                      ; Left key
+            je left
+            cmp ah,4Dh                                      ; Right key
+            je right
+
+            .if lvl == 1
+                jmp level_one
+            .endif
+            .if lvl == 2
+                jmp level_two
+            .endif
+            .if lvl == 3
+                jmp level_three
+            .endif
+
+        reset:                                              ; Reseting Bullet Coordinate
+            mov by_ , 150                                    ; Reset y Coordinate of first Bullete 
+            mov by1_ , 150                                   ; Reset y Coordinate of second Bullete 
+            mov al, s_x                                    ; Reset y coordinate according to y coordinate of Spaceship
+            mov bx_ , al
+            add bx_, 20
+            mov bx1_ , al
+            add bx1_ , 20
+            ;sub bx_ , 2
+            ;add bx1_ , 2
+            mov al, 0
+
+            .if lvl == 1
+                jmp level_one
+            .endif
+            .if lvl == 2
+                jmp level_two
+            .endif
+            .if lvl == 3
+                jmp level_three
+            .endif
+
+            ;cmp lvl , 1
+            ;je level_one
+            ;jmp level_two
+            ;jmp level_one                                   ; Again jump to level one
+        left:
+            sub s_x , 3                                     ; If left key is pressed then decrease the y coordinate of spaceship
+         ;   sub by_ , 1
+          ;  sub by1_ , 1
+
+            .if lvl == 1
+                jmp level_one
+            .endif
+            .if lvl == 2
+                jmp level_two
+            .endif
+            .if lvl == 3
+                jmp level_three
+            .endif
+
+            ;cmp lvl , 1
+            ;je level_one
+            ;jmp level_two
+            ;jmp level_one
+        right:                                              ; If left key is pressed then increase the y coordinate of spaceship
+            add s_x , 3
+           ; add by_ , 1
+            ;add by1_ , 1
+            .if lvl == 1
+                jmp level_one
+            .endif
+            .if lvl == 2
+                jmp level_two
+            .endif
+            .if lvl == 3
+                jmp level_three
+            .endif
+
+            ;cmp lvl , 1
+            ;je level_one
+            ;jmp level_two
+            ;jmp level_one
+
+
+        level_two:
+            
+            sub by_ , 4
+            sub by1_ , 2
+            cmp by_ , 20
+            jb reset
+
+            set_background                                      ; Clearing Screen
+            header
+
+            print_pattrn_2                                        ; Printing Level one pattern
+            ;spaceship s_x , s_y                                 ; Spaceship
+
+            draw_image_2 s_x, s_y
+            draw_bullet_2 bx_, by_
+            sleep_2
+            ;bullet bx_ , by_                                    ; Left Bullet
+            burst_check_2 bx_ , by_
+            ; add old code here (on completion of level 2 automatically move to level 3)
+
+            mov bx, 0
+
+            .if rndm_num < 4
+                mov bx, xlen
+            .endif 
+
+            .if rndm_num > 3
+                mov bx, xlen_2
+            .endif 
+
+            .if two_score == bx ; score == ax
+                mov game_status, 1
+                mov lvl, 3
+                congratulation_2 
+            .endif 
+            .if lvl == 3
+                jmp Exit__
+            .endif
+
+
+
+
+            mov ah, 1                                           ; Take Keyboard Input
+            int 16h
+            jz level_two                                        ; IF no key press then again jump to level one else check which key is pressed
+            jmp keyPress
+
+
+        level_three:
+            sub by_ , 4
+            sub by1_ , 2
+            cmp by_ , 20
+            jb reset
+
+            add mbx_, 1
+
+            .if mbx_ > 210
+                mov mbx_ , 55
+            .endif
+            
+            set_background 
+            header
+            MOV AH,02H                                          ; Set Cursor position
+            MOV DH, 2 ;Row Number
+            MOV DL, 32 ;Column Number
+            INT 10H
+
+            mov dx, offset life_description
+            mov ah, 09h
+            int 21h
+
+            mov dl, life
+            add dl, 48
+            mov ah, 02H
+            int 21h
+            
+            draw_monster monster_x, monster_y
+            draw_monster_bullet mbx_, mby_ 
+            print_pattrn_3
+            
+            draw_bullet_3 bx_, by_
+            draw_image_3 s_x, s_y
+            sleep_3
+            burst_check_3 bx_ , by_
+            burst_monster_3 mbx_, mby_
+
+
+            .if three_score == xlen_2 ; score == ax
+                mov game_status, 1
+                mov lvl, 4
+                congratulation_3 
+            .endif 
+            .if lvl == 4
+                jmp Exit__
+            .endif
+
+            .if life == 0
+                jmp Exit__
+            .endif
+
+
+            mov ah, 1                                           ; Take Keyboard Input
+            int 16h
+            jz level_three                                        ; IF no key press then again jump to level one else check which key is pressed
+            jmp keyPress
+           
+            
+
+    Exit__:
+        ;Background
+        
+
+Endm

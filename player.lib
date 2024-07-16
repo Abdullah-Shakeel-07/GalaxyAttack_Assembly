@@ -1,0 +1,116 @@
+player_info macro check
+
+        again_print:
+       ;Background
+        
+        MOV AH, 06h    ; Scroll up function
+        XOR AL, AL     ; Clear entire screen
+        XOR CX, CX     ; Upper left corner CH=row, CL=column
+        MOV DX, 1D4FH  ; lower right corner DH=row, DL=column 
+        MOV BH, 8h    ; Gray
+        INT 10H
+
+; -------------------------- Printing State ----------------
+
+        ; Clearing Register
+        mov AX, 0
+        mov BX, 0
+        mov CX, 0 
+
+        ; Cursor Position
+        MOV AH, 02H
+        MOV DH, 12;Row Number
+        MOV DL, 10 ;Column Number                               ; For 12H replace 10 with 35
+        INT 10H
+
+        mov dx, offset state_description
+        mov ah, 09h
+        int 21h
+
+        .if game_status == 1
+                mov dx, offset win                ; 
+                mov ah, 09h
+                int 21h
+        .endif
+
+        .if game_status == 0
+                mov dx, offset lose                ; 
+                mov ah, 09h
+                int 21h
+        .endif
+
+        
+
+; -------------------------- Printing Score ----------------
+
+        ; Clearing Register
+        mov AX, 0
+        mov BX, 0
+        mov CX, 0 
+
+        ; Cursor Position
+        MOV AH, 02H
+        MOV DH, 14;Row Number
+        MOV DL, 10 ;Column Number                               ; For 12H replace 10 with 35
+        INT 10H
+
+        mov dx, offset score_description
+        mov ah, 09h
+        int 21h
+
+        call printscore
+
+        ;mov dx, score                ; Print value of score
+        ;add dx, 48
+        ;mov ah, 02H
+        ;int 21h
+
+; -------------------------- Printing Level ----------------
+
+        ; Clearing Register
+        mov AX, 0
+        mov BX, 0
+        mov CX, 0 
+
+        ; Cursor Position
+        MOV AH, 02H
+        MOV DH, 16;Row Number
+        MOV DL, 10 ;Column Number                                       ; For 12H replace 10 with 35
+        INT 10H
+
+        mov dx, offset level_description
+        mov ah, 09h
+        int 21h
+
+        mov dl, level                ; Print value of level
+        add dl, 48
+        mov ah,02h
+        int 21h
+
+        ; Cursor Position
+        MOV AH, 02H
+        MOV DH, 18;Row Number
+        MOV DL, 10 ;Column Number                                       ; For 12H replace 10 with 35
+        INT 10H
+
+        mov dx, offset press                                ; Press key to continue
+        mov ah, 09h
+        int 21h
+
+        ;call sleeping
+
+        mov ah, 0                                           ; Take Keyboard Input
+        int 16h
+        
+        cmp ah,1Ch
+        je exit_scr1
+
+        jmp again_print
+
+    exit_scr1: 
+
+
+
+       
+
+Endm

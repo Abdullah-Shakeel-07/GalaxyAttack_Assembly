@@ -1,0 +1,105 @@
+draw macro 
+    push cx
+    
+    ;mov al, 3
+    ;mov ah, 09h
+    ;mov cx, 1
+    ;mov bl, 01111011b
+    ;int 10h
+    
+    pop cx
+    
+endm
+
+draw_enemy macro x , y 
+    push si
+    mov ax, 0
+    mov bx, 0
+    mov cx, 0
+    mov dx, 0
+
+    mov al, x
+    mov func_X, al
+    mov al, y
+    mov func_y, al
+
+    mov al, x
+    add al, 32
+    mov temp_x , al
+
+    mov al, y
+    add al, 16
+    mov temp_y , al
+
+    mov si, offset enemy
+    e_row:                                                        ; 32x32 
+        e_column:                                                 ; Print pixel 
+            MOV AH, 0Ch
+            MOV AL, [si]
+            MOV Cl, func_X
+            mov ch, 0
+            MOV Dl, func_y
+            mov dh, 0
+            INT 10H     
+            inc si
+            add func_X, 1
+            mov al, temp_x
+            cmp func_X, al
+            jne e_column
+        add func_y, 1
+        mov al, x
+        mov func_X, al 
+        mov al, temp_y                                             ; MOV x to starting positon
+        cmp func_y, al
+        jne  e_row
+
+        pop si
+
+endm
+
+
+
+print_pattrn macro  
+    ; Clearing Register
+        mov AX, 0
+        mov BX, 0
+        mov CX, 0 
+        mov DX, 0  
+        mov si, 0
+        mov temp , 0
+
+        mov al, xlen
+        mov len_x, al
+         
+        mov si, offset x_cor 
+        mov temp , si
+        mov si, offset y_cor
+      
+        shape: 
+                mov dl, [si]
+                mov store_y, dl
+                inc si  
+                xchg si, temp
+                mov dh, [si]
+                mov store_x, dh
+                inc si
+                xchg si, temp
+                MOV AH,02H
+                INT 10H 
+                ;draw
+                .if store_x != 0
+                    draw_enemy store_x, store_y
+                .endif
+                        
+                sub len_x ,1
+                cmp len_x ,0
+                jne shape
+
+        mov AX, 0
+        mov BX, 0
+        mov CX, 0 
+        mov DX, 0  
+        mov si, 0
+        mov temp , 0
+            
+endm

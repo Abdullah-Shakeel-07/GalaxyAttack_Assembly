@@ -1,0 +1,353 @@
+; ---------------------------------------------- Burst Check for level 1 -------------------------------
+burst_check macro x, y                                          
+    ; Clearing Register
+    mov AX, 0
+    mov BX, 0
+    mov CX, 0 
+    mov DX, 0  
+    mov si, 0 
+    mov countval, 0
+
+    ; -----------------
+    mov cl, xlen
+    mov ch, 0
+    
+    lop1:
+        mov si, offset x_cor
+        add si, countval
+        mov al, [si]
+        sub al, 4
+        ;cmp bx_, al
+        cmp x, al
+        ja check1
+        jmp addition
+        check1:
+        add al, 36
+        ;cmp bx_, al
+        cmp x, al
+        jb check3
+        jmp addition
+        check3:
+        mov si , offset y_cor
+        add si, countval
+        mov al, [si]
+        ;cmp by_, al
+        cmp y, al
+        ja check4
+        jmp addition
+        check4:
+        add al, 20
+        ;cmp by_ , al
+        cmp y , al
+        jb print
+        jmp addition
+        print:
+            mov si, offset y_cor
+            add si, countval
+            mov al, 0
+            mov [si], al  
+            
+            mov si, offset x_cor
+            add si, countval
+;            mov al, [si]
+            mov al, 0
+            mov [si], al
+            
+            
+            mov by_ , 160                                    ; Reset X Coordinate of first Bullete 
+            ;mov bx1_ , 23                                   ; Reset X Coordinate of second Bullete 
+            mov al, s_x                                     ; Reset y coordinate according to y coordinate of Spaceship
+            mov bx_ , al
+            add bx_ , 20
+            ;mov by1_ , al
+            ;sub by_ , 2
+            ;add by1_ , 2
+            mov al, 0
+
+        
+            mov cx , 1
+            ;add score, 1                                    ; Increment score 
+            add one_score, 1
+            add score_check , 1
+        addition:
+            add countval,1
+    loop lop1
+    
+Endm
+
+; -------------------------------------------------------------- Burst Check for level 2 --------------------------------
+burst_check_2 macro x, y                                          
+; Left Bullet
+    ; Clearing Register
+    mov AX, 0
+    mov BX, 0
+    mov CX, 0 
+    mov DX, 0  
+    mov si, 0 
+    mov countval, 0
+
+    cmp rndm_num, 3
+    ja burst_2
+
+    burst_1:
+    ; -----------------
+        mov cl, xlen
+        mov ch, 0
+        
+        lop_21:
+            mov si, offset x_cor_copy
+            add si, countval
+            mov al, [si]
+            sub al, 4
+            ;cmp bx_, al
+            cmp x, al
+            ja check_11
+            jmp addition_21
+            check_11:
+            add al, 36
+            ;cmp bx_, al
+            cmp x, al
+            jb check_12
+            jmp addition_21
+            check_12:
+            mov si , offset y_cor_copy
+            add si, countval
+            mov al, [si]
+            ;cmp by_, al
+            cmp y, al
+            ja check_13
+            jmp addition_21
+            check_13:
+            add al, 20
+            ;cmp by_ , al
+            cmp y , al
+            jb print_21
+            jmp addition_21
+            print_21:
+                mov si, offset y_cor_copy
+                add si, countval
+                mov al, 0
+                mov [si], al  
+                
+                mov si, offset x_cor_copy
+                add si, countval
+    ;            mov al, [si]
+                mov al, 0
+                mov [si], al
+                
+                
+                mov by_ , 160                                    ; Reset X Coordinate of first Bullete 
+                ;mov bx1_ , 23                                   ; Reset X Coordinate of second Bullete 
+                mov al, s_x                                     ; Reset y coordinate according to y coordinate of Spaceship
+                mov bx_ , al
+                add bx_ , 20
+                ;mov by1_ , al
+                ;sub by_ , 2
+                ;add by1_ , 2
+                mov al, 0
+
+            
+                mov cx , 1
+                ;add score, 1                                    ; Increment score 
+                add two_score, 1
+            addition_21:
+                add countval,1
+        loop lop_21
+
+        jmp Exit____
+        burst_2:
+        mov cl, xlen_2
+        mov ch, 0
+        
+        lop_2:
+            mov si, offset x_cor_2
+            add si, countval
+            mov al, [si]
+            sub al, 4
+            ;cmp bx_, al
+            cmp x, al
+            ja check_21
+            jmp addition_22
+            check_21:
+            add al, 36
+            ;cmp bx_, al
+            cmp x, al
+            jb check_22
+            jmp addition_22
+            check_22:
+            mov si , offset y_cor_2
+            add si, countval
+            mov al, [si]
+            ;cmp by_, al
+            cmp y, al
+            ja check_23
+            jmp addition_22
+            check_23:
+            add al, 20
+            ;cmp by_ , al
+            cmp y , al
+            jb print_22
+            jmp addition_22
+            print_22:
+                mov si, offset y_cor_2
+                add si, countval
+                mov al, 0
+                mov [si], al  
+                
+                mov si, offset x_cor_2
+                add si, countval
+    ;            mov al, [si]
+                mov al, 0
+                mov [si], al
+                
+                
+                mov by_ , 160                                    ; Reset X Coordinate of first Bullete 
+                ;mov bx1_ , 23                                   ; Reset X Coordinate of second Bullete 
+                mov al, s_x                                     ; Reset y coordinate according to y coordinate of Spaceship
+                mov bx_ , al
+                add bx_ , 20
+                ;mov by1_ , al
+                ;sub by_ , 2
+                ;add by1_ , 2
+                mov al, 0
+
+            
+                mov cx , 1
+                ;add score, 1                                    ; Increment score 
+                add two_score, 1
+            addition_22:
+                add countval,1
+        loop lop_2
+
+    Exit____:
+Endm
+
+; ------------------------------------------------------------- Burst Check for level 3 ----------------
+
+; ----------------------------------------------- Extra --------------------
+
+burst_check1 macro x, y                                     ; Right Bullet
+    ; Clearing Register
+    mov AX, 0
+    mov BX, 0
+    mov CX, 0 
+    mov DX, 0  
+    mov si, 0 
+    mov countval, 0
+
+    ; -----------------
+    mov cl, xlen
+    mov ch, 0
+    
+    lop2:
+        mov si, offset x_cor
+        add si, countval
+        mov al, [si]
+        cmp al, bx1_
+        je check2
+        jmp addition1
+        check2:
+        mov si , offset y_cor
+        add si, countval
+        mov al, [si]
+        cmp al, by1_
+        je print1
+        jmp addition1
+        print1:
+            mov si, offset y_cor
+            add si, countval
+            mov al, 0
+            mov [si], al  
+            
+            mov si, offset x_cor
+            add si, countval
+;            mov al, [si]
+            mov al, 0
+            mov [si], al
+            
+            
+           ; mov bx_ , 23                                    ; Reset X Coordinate of first Bullete 
+            mov bx1_ , 23                                   ; Reset X Coordinate of second Bullete 
+            mov al, s_y                                     ; Reset y coordinate according to y coordinate of Spaceship
+            ;mov by_ , al
+            mov by1_ , al
+            ;sub by_ , 2
+            add by1_ , 2
+            mov al, 0
+
+        
+            mov cx , 1
+            ;add score, 1 
+            
+    
+        addition1:
+            add countval,1
+    loop lop2
+    
+Endm
+
+
+; -------------------- New 
+
+burst_check3 macro x, y                                          
+    mov AX, 0
+    mov BX, 0
+    mov CX, 0 
+    mov DX, 0  
+    mov si, 0 
+    mov countval, 0
+
+    mov cl, xlen
+    mov ch, 0
+    
+    lop1_3:
+        mov si, offset pattrn1x_cor_3
+        add si, countval
+        mov al, [si]
+        sub al, 4
+        cmp x, al
+        ja check1_3
+        jmp addition_3
+        check1_3:
+        add al, 36
+        cmp x, al
+        jb check3_3
+        jmp addition_3
+        check3_3:
+        mov si , offset pattrn1y_cor_3
+        add si, countval
+        mov al, [si]
+        cmp y, al
+        ja check4_3
+        jmp addition_3
+        check4_3:
+        add al, 20
+        cmp y , al
+        jb print_3
+        jmp addition_3
+        print_3:
+            mov si, offset pattrn1y_cor_3
+            add si, countval
+            mov al, 0
+            mov [si], al  
+            
+            mov si, offset pattrn1x_cor_3
+            add si, countval
+            mov al, 0
+            mov [si], al
+            
+            
+            mov by_ , 160                                    ; Reset X Coordinate of first Bullete 
+            mov al, s_x                                     ; Reset y coordinate according to y coordinate of Spaceship
+            mov bx_ , al
+            add bx_ , 20
+            mov al, 0
+
+            mov cx , 1
+            add score, 1                                    ; Increment score 
+            add score_check , 1
+        addition_3:
+            add countval,1
+    loop lop1_3
+    
+Endm

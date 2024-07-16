@@ -1,0 +1,180 @@
+draw_shape macro 
+    mov ah, 09h
+    mov cx, 1
+    mov bl, 02
+    int 10h
+endm
+
+spaceship macro x, y
+    ; ------------------------ Spaceship ---------------
+
+    ; top Left  /  
+    
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    sub dh, 1
+    MOV DL, y ;Column Number
+    sub dl, 1
+    INT 10H
+
+    mov al, '/'
+    draw_shape
+
+    ; Left  /  
+    
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    MOV DL, y ;Column Number
+    sub dl, 4
+    INT 10H
+
+    mov al, '/'
+    draw_shape
+
+
+    ; Left  bracket    
+    
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    add dh, 1
+    MOV DL, y ;Column Number
+    sub dl, 4
+    INT 10H
+
+    mov al, '\'
+    draw_shape
+
+    ; Left  bracket    
+    
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    MOV DL, y ;Column Number
+    sub dl, 3
+    INT 10H
+
+    mov al, '{'
+    draw_shape
+
+
+    ; Left      
+    
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    MOV DL, y ;Column Number
+    sub dl, 2
+    INT 10H
+
+    mov al, '!'
+    draw_shape
+
+    ; Centr
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    sub dh , 1
+    MOV DL, y ;Column Number
+    INT 10H
+
+    mov al, '!'
+    draw_shape
+
+    
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    MOV DL, y ;Column Number
+    INT 10H
+
+    mov al, '*'
+    draw_shape
+
+    ; Right
+
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    MOV DL, y ;Column Number
+    add dl, 2
+    INT 10H
+
+    mov al, '!'
+    draw_shape
+        
+    ; bottom line
+
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    add dh, 1
+    MOV DL, y ;Column Number
+    sub dl, 1
+    INT 10H
+
+    mov al, '-'
+    mov ah, 09h
+    mov cx, 3
+    mov bl, 02
+    int 10h
+
+
+    ; right bracket
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    MOV DL, y ;Column Number
+    add dl, 3
+    INT 10H
+
+    mov al, '}'
+    draw_shape
+
+    ; \
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    MOV DL, y ;Column Number
+    add dl, 4
+    INT 10H
+
+    mov al, '\'
+    draw_shape
+
+    ; /
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    add dh, 1
+    MOV DL, y ;Column Number
+    add dl, 4
+    INT 10H
+
+    mov al, '/'
+    draw_shape
+
+    ; top right \
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    sub dh, 1
+    MOV DL, y ;Column Number
+    add dl, 1
+    INT 10H
+
+    mov al, '\'
+    draw_shape
+
+    ; bottom left !
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    add dh, 2
+    MOV DL, y ;Column Number
+    sub dl, 2
+    INT 10H
+
+    mov al, '!'
+    draw_shape
+
+    ; bottom right !
+    MOV AH,02H
+    MOV DH, x ;Row Number
+    add dh, 2
+    MOV DL, y ;Column Number
+    add dl, 2
+    INT 10H
+
+    mov al, '!'
+    draw_shape
+
+Endm

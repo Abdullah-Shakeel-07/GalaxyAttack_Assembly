@@ -1,0 +1,37 @@
+select_level macro check
+
+       ;Background
+        
+        MOV AH, 06h    ; Scroll up function
+        XOR AL, AL     ; Clear entire screen
+        XOR CX, CX     ; Upper left corner CH=row, CL=column
+        MOV DX, 1D4FH  ; lower right corner DH=row, DL=column 
+        MOV BH, 8h    ; Gray
+        INT 10H
+
+; -------------------------- Printing State ----------------
+
+        ; Clearing Register
+        mov AX, 0
+        mov BX, 0
+        mov CX, 0 
+
+        ; Cursor Position
+        MOV AH, 02H
+        MOV DH, 12;Row Number
+        MOV DL, 10 ;Column Number                               ; For 12H replace 10 with 35
+        INT 10H
+
+        mov dx, offset msg4
+        mov ah, 09h
+        int 21h
+
+        mov ah, 01h
+        int 21h
+        sub al,48
+
+        mov level, al 
+
+
+
+Endm
